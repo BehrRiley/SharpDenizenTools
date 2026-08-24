@@ -1976,19 +1976,12 @@ namespace SharpDenizenTools.ScriptAnalysis
             if (scriptName.Contains('<'))
             {
                 string partial = scriptName.Before('<');
-                res = SurroundingWorkspace.Scripts.FirstOrDefault(k => k.Key.StartsWith(partial) && (requireType is null || k.Value.Type == requireType)).Value;
-                if (res is null)
-                {
-                    res = GeneratedWorkspace.Scripts.FirstOrDefault(k => k.Key.StartsWith(partial) && (requireType is null || k.Value.Type == requireType)).Value;
-                }
+                res = SurroundingWorkspace.Scripts.FirstOrDefault(k => k.Key.StartsWith(partial) && (requireType is null || k.Value.Type == requireType)).Value
+                    ?? GeneratedWorkspace.Scripts.FirstOrDefault(k => k.Key.StartsWith(partial) && (requireType is null || k.Value.Type == requireType)).Value;
             }
             else
             {
-                res = SurroundingWorkspace.Scripts.GetValueOrDefault(scriptName);
-                if (res is null)
-                {
-                    res = GeneratedWorkspace.Scripts.GetValueOrDefault(scriptName);
-                }
+                res = SurroundingWorkspace.Scripts.GetValueOrDefault(scriptName) ?? GeneratedWorkspace.Scripts.GetValueOrDefault(scriptName);
                 if (res is not null && requireType is not null && res.Type != requireType)
                 {
                     return null;

@@ -159,10 +159,7 @@ namespace SharpDenizenTools.ScriptAnalysis
                             string rawObj = objArg.Text;
                             mech = possible.FirstOrDefault(m => m.MechObject == rawObj);
                             // TODO: if a tag or "def:", determine possible types and use that
-                            if (mech is null)
-                            {
-                                mech = possible.First();
-                            }
+                            mech ??= possible.First();
                         }
                     }
                     if (mech is null)
